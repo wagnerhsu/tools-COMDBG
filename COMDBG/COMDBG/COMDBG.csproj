@@ -12,6 +12,7 @@
     <AssemblyTitle>COMDBG</AssemblyTitle>
     <Product>COMDBG</Product>
     <Copyright>Copyright © 2014-2015</Copyright>
+    <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\favicon.ico</ApplicationIcon>
@@ -77,10 +78,14 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NLog" Version="5.3.2"/>
+    <PackageReference Include="System.Resources.Extensions" Version="4.6.0" />
   </ItemGroup>
   <ItemGroup>
     <None Update="nlog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ComDbgCommon\ComDbgCommon.csproj" />
   </ItemGroup>
 </Project>

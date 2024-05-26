@@ -37,8 +37,10 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.IO.Ports;
+using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
+using ComDbgCommon;
 
 namespace COMDBG
 {
@@ -141,6 +143,7 @@ namespace COMDBG
                 {
                     comListCbx.Items.Add(ArrayComPortsNames[i]);
                 }
+
                 comListCbx.Text = ArrayComPortsNames[0];
                 openCloseSpbtn.Enabled = true;
             }
@@ -159,7 +162,7 @@ namespace COMDBG
                 return;
             }
 
-            if (e.isOpend)  //Open successfully
+            if (e.isOpend) //Open successfully
             {
                 statuslabel.Text = comListCbx.Text + " Opend";
                 openCloseSpbtn.Text = "Close";
@@ -181,7 +184,7 @@ namespace COMDBG
                     sendtbx.ReadOnly = true;
                 }
             }
-            else    //Open failed
+            else //Open failed
             {
                 statuslabel.Text = "Open failed !";
                 sendbtn.Enabled = false;
@@ -240,6 +243,7 @@ namespace COMDBG
                 {
                     //disable form destroy exception
                 }
+
                 return;
             }
 
@@ -253,8 +257,10 @@ namespace COMDBG
                 {
                     receivetbx.AppendText("-");
                 }
-                receivetbx.AppendText(IController.Bytes2Hex(e.receivedBytes));
+
+                receivetbx.AppendText(ConvertUtility.ByteArrayToHex(e.receivedBytes));
             }
+
             //update status bar
             receiveBytesCount += e.receivedBytes.Length;
             toolStripStatusRx.Text = "Received: " + receiveBytesCount.ToString();
@@ -328,6 +334,7 @@ namespace COMDBG
                 {
                     comListCbx.Items.Add(ArrayComPortsNames[i]);
                 }
+
                 comListCbx.Text = ArrayComPortsNames[0];
                 openCloseSpbtn.Enabled = true;
                 statuslabel.Text = "OK !";
@@ -347,6 +354,7 @@ namespace COMDBG
             {
                 return;
             }
+
             //set select index to the end
             sendtbx.SelectionStart = sendtbx.TextLength;
 
@@ -354,20 +362,35 @@ namespace COMDBG
             {
                 //If hex radio checked
                 //send bytes to serial port
-                Byte[] bytes = IController.Hex2Bytes(sendText);
-                sendbtn.Enabled = false;//wait return
-                flag = controller.SendDataToCom(bytes);
+                IList<string> textList = ParseUtility.ParseLines(sendText);
+
+
+                sendbtn.Enabled = false; //wait return
+                foreach (var line in textList)
+                {
+                    Byte[] bytes = ConvertUtility.HexToByteArray(line);
+                    flag = controller.SendDataToCom(bytes);
+                    Thread.Sleep(100);
+                    sendBytesCount += bytes.Length;
+                }
+
                 sendbtn.Enabled = true;
-                sendBytesCount += bytes.Length;
             }
             else
             {
                 //send String to serial port
-                sendbtn.Enabled = false;//wait return
-                flag = controller.SendDataToCom(sendText);
+                sendbtn.Enabled = false; //wait return
+                IList<string> textList = ParseUtility.ParseLines(sendText);
+                foreach (var line in textList)
+                {
+                    flag = controller.SendDataToCom(line);
+                    Thread.Sleep(100);
+                    sendBytesCount += line.Length;
+                }
+
                 sendbtn.Enabled = true;
-                sendBytesCount += sendText.Length;
             }
+
             if (flag)
             {
                 statuslabel.Text = "Send OK !";
@@ -376,6 +399,7 @@ namespace COMDBG
             {
                 statuslabel.Text = "Send failed !";
             }
+
             //update status bar
             toolStripStatusTx.Text = "Sent: " + sendBytesCount.ToString();
         }
@@ -418,7 +442,8 @@ namespace COMDBG
                 {
                     return;
                 }
-                receivetbx.Text = IController.String2Hex(receivetbx.Text);
+
+                receivetbx.Text = ConvertUtility.StringToHex(receivetbx.Text);
             }
         }
 
@@ -435,7 +460,8 @@ namespace COMDBG
                 {
                     return;
                 }
-                receivetbx.Text = IController.Hex2String(receivetbx.Text);
+
+                receivetbx.Text = ConvertUtility.HexToString(receivetbx.Text);
             }
         }
 
@@ -452,7 +478,13 @@ namespace COMDBG
                 {
                     return;
                 }
-                sendtbx.Text = IController.String2Hex(sendtbx.Text);
+
+                IList<string> lines = ParseUtility.ParseLines(sendtbx.Text);
+                foreach (var line in lines)
+                {
+                    sendtbx.Text += ConvertUtility.StringToHex(line);
+                }
+
                 addCRCcbx.Enabled = true;
             }
         }
@@ -470,7 +502,13 @@ namespace COMDBG
                 {
                     return;
                 }
-                sendtbx.Text = IController.Hex2String(sendtbx.Text);
+
+                IList<string> lines = ParseUtility.ParseLines(sendtbx.Text);
+                foreach (var line in lines)
+                {
+                    sendtbx.Text += ConvertUtility.HexToString(line);
+                }
+
                 addCRCcbx.Enabled = false;
             }
         }
@@ -498,6 +536,7 @@ namespace COMDBG
                         {
                             e.Handled = false;
                         }
+
                         break;
 
                     case 2:
@@ -506,6 +545,7 @@ namespace COMDBG
                         {
                             e.Handled = false;
                         }
+
                         break;
                 }
             }
@@ -576,10 +616,11 @@ namespace COMDBG
                 addCRCcbx.Checked = false;
                 return;
             }
+
             if (addCRCcbx.Checked)
             {
                 //Add 2 bytes CRC to the end of the data
-                Byte[] senddata = IController.Hex2Bytes(sendText);
+                Byte[] senddata = ConvertUtility.HexToByteArray(sendText);
                 Byte[] crcbytes = BitConverter.GetBytes(CRC16.Compute(senddata));
                 sendText += "-" + BitConverter.ToString(crcbytes, 1, 1);
                 sendText += "-" + BitConverter.ToString(crcbytes, 0, 1);
@@ -592,6 +633,7 @@ namespace COMDBG
                     sendText = sendText.Substring(0, sendText.Length - 6);
                 }
             }
+
             sendtbx.Text = sendText;
         }
 
