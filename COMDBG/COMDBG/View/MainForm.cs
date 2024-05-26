@@ -1,34 +1,33 @@
 ﻿/**
- 
+
  * Copyright (c) 2014-2015, Wenhuix, All rights reserved.
 
- * Redistribution and use in source and binary forms, with or without modification, 
+ * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
 
- * Redistributions of source code must retain the above copyright notice, 
+ * Redistributions of source code must retain the above copyright notice,
  * this list of conditions and the following disclaimer.
 
- * Redistributions in binary form must reproduce the above copyright notice, 
- * this list of conditions and the following disclaimer in the documentation 
+ * Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
  * and/or other materials provided with the distribution.
 
- * Neither the name of COMDBG nor the names of its contributors may 
- * be used to endorse or promote products derived from this software without 
+ * Neither the name of COMDBG nor the names of its contributors may
+ * be used to endorse or promote products derived from this software without
  * specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 
 using System;
 using System.Collections.Generic;
@@ -46,10 +45,13 @@ namespace COMDBG
     public interface IView
     {
         void SetController(IController controller);
+
         //Open serial port event
         void OpenComEvent(Object sender, SerialPortEventArgs e);
+
         //Close serial port event
         void CloseComEvent(Object sender, SerialPortEventArgs e);
+
         //Serial port receive data event
         void ComReceiveDataEvent(Object sender, SerialPortEventArgs e);
     }
@@ -99,7 +101,7 @@ namespace COMDBG
             //Data bits
             dataBitsCbx.Items.Add(7);
             dataBitsCbx.Items.Add(8);
-            //get the 8bit item print it in the text 
+            //get the 8bit item print it in the text
             dataBitsCbx.Text = dataBitsCbx.Items[1].ToString();
 
             //Stop bits
@@ -255,14 +257,13 @@ namespace COMDBG
             }
             //update status bar
             receiveBytesCount += e.receivedBytes.Length;
-            toolStripStatusRx.Text = "Received: "+receiveBytesCount.ToString();
+            toolStripStatusRx.Text = "Received: " + receiveBytesCount.ToString();
 
             //auto reply
             if (autoReplyCbx.Checked)
             {
                 sendbtn_Click(this, new EventArgs());
             }
-
         }
 
         /// <summary>
@@ -298,7 +299,7 @@ namespace COMDBG
                 controller.OpenSerialPort(comListCbx.Text, baudRateCbx.Text,
                     dataBitsCbx.Text, stopBitsCbx.Text, parityCbx.Text,
                     handshakingcbx.Text);
-            } 
+            }
             else
             {
                 controller.CloseSerialPort();
@@ -331,7 +332,6 @@ namespace COMDBG
                 openCloseSpbtn.Enabled = true;
                 statuslabel.Text = "OK !";
             }
-            
         }
 
         /// <summary>
@@ -348,8 +348,8 @@ namespace COMDBG
                 return;
             }
             //set select index to the end
-            sendtbx.SelectionStart = sendtbx.TextLength; 
-          
+            sendtbx.SelectionStart = sendtbx.TextLength;
+
             if (sendHexRadiobtn.Checked)
             {
                 //If hex radio checked
@@ -489,27 +489,27 @@ namespace COMDBG
                 int length = sendtbx.SelectionStart;
                 switch (length % 3)
                 {
-                case 0:
-                case 1:
-                    if ((e.KeyChar >= 'a' && e.KeyChar <= 'f')
-                        || (e.KeyChar >= 'A' && e.KeyChar <= 'F')
-                        || char.IsDigit(e.KeyChar)
-                        || (char.IsControl(e.KeyChar) && e.KeyChar != (char)13))
-                    {
-                        e.Handled = false;
-                    }
-                    break;
-                case 2:
-                    if (e.KeyChar == '-'
-                        || (char.IsControl(e.KeyChar) && e.KeyChar != (char)13))
-                    {
-                        e.Handled = false;
-                    }
-                    break;
+                    case 0:
+                    case 1:
+                        if ((e.KeyChar >= 'a' && e.KeyChar <= 'f')
+                            || (e.KeyChar >= 'A' && e.KeyChar <= 'F')
+                            || char.IsDigit(e.KeyChar)
+                            || (char.IsControl(e.KeyChar) && e.KeyChar != (char)13))
+                        {
+                            e.Handled = false;
+                        }
+                        break;
+
+                    case 2:
+                        if (e.KeyChar == '-'
+                            || (char.IsControl(e.KeyChar) && e.KeyChar != (char)13))
+                        {
+                            e.Handled = false;
+                        }
+                        break;
                 }
             }
         }
-
 
         /// <summary>
         /// Auto send data to serial port
@@ -683,6 +683,18 @@ namespace COMDBG
             }
         }
 
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            openFileDialog.Filter = "txt file|*.txt";
+            openFileDialog.DefaultExt = ".txt";
 
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                String fName = openFileDialog.FileName;
+                sendtbx.Text = System.IO.File.ReadAllText(fName);
+            }
+        }
     }
 }

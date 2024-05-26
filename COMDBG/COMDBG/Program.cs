@@ -34,17 +34,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using NLog;
 
 namespace COMDBG
 {
     static class Program
     {
+        static ILogger Logger = LogManager.GetCurrentClassLogger();
         /// <summary>
         /// Entry point of the program
         /// </summary>
         [STAThread]
         static void Main()
         {
+            Logger.Info($"Enter {nameof(Program)}");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             MainForm view = new MainForm();

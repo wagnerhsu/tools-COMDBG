@@ -79,6 +79,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.handshakingcbx = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -406,6 +407,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.quitToolStripMenuItem});
             this.aboutToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -419,27 +421,27 @@
             this.receivedDataToolStripMenuItem,
             this.sendDataToolStripMenuItem});
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // receivedDataToolStripMenuItem
             // 
             this.receivedDataToolStripMenuItem.Name = "receivedDataToolStripMenuItem";
-            this.receivedDataToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.receivedDataToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.receivedDataToolStripMenuItem.Text = "Received Data...";
             this.receivedDataToolStripMenuItem.Click += new System.EventHandler(this.receivedDataToolStripMenuItem_Click);
             // 
             // sendDataToolStripMenuItem
             // 
             this.sendDataToolStripMenuItem.Name = "sendDataToolStripMenuItem";
-            this.sendDataToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.sendDataToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sendDataToolStripMenuItem.Text = "Send Data...";
             this.sendDataToolStripMenuItem.Click += new System.EventHandler(this.sendDataToolStripMenuItem_Click);
             // 
             // quitToolStripMenuItem
             // 
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.quitToolStripMenuItem.Text = "Quit";
             this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
             // 
@@ -586,6 +588,13 @@
             this.label9.TabIndex = 23;
             this.label9.Text = "HandShaking:";
             // 
+            // loadToolStripMenuItem
+            // 
+            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadToolStripMenuItem.Text = "Load";
+            this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -666,6 +675,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.CheckBox addCRCcbx;
         private System.Windows.Forms.CheckBox autoReplyCbx;
+        private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
     }
 }
 
