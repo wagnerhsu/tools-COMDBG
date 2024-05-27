@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ComDbgCommon
 {
-    public class ParseUtility
+    public static class ParseUtility
     {
         public static IList<string> ParseLines(string data)
         {

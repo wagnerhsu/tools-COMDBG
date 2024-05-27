@@ -18,10 +18,10 @@
     <ApplicationIcon>Resources\favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System.Data.DataSetExtensions"/>
-    <Reference Include="Microsoft.CSharp"/>
-    <Reference Include="System.Deployment"/>
-    <Reference Include="System.Windows.Forms"/>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="View\AboutForm.cs">
@@ -74,10 +74,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\favicon.ico"/>
+    <Content Include="Resources\favicon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="NLog" Version="5.3.2"/>
+    <PackageReference Include="Costura.Fody" Version="5.7.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="NLog" Version="5.3.2" />
     <PackageReference Include="System.Resources.Extensions" Version="4.6.0" />
   </ItemGroup>
   <ItemGroup>

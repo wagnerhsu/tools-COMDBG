@@ -31,33 +31,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.IO.Ports;
 using System.Threading;
-using System.Windows;
 using System.Windows.Forms;
+using COMDBG.View;
 using ComDbgCommon;
 
 namespace COMDBG
 {
-    public interface IView
-    {
-        void SetController(IController controller);
-
-        //Open serial port event
-        void OpenComEvent(Object sender, SerialPortEventArgs e);
-
-        //Close serial port event
-        void CloseComEvent(Object sender, SerialPortEventArgs e);
-
-        //Serial port receive data event
-        void ComReceiveDataEvent(Object sender, SerialPortEventArgs e);
-    }
-
     public partial class MainForm : Form, IView
     {
         private IController controller;
@@ -71,9 +54,10 @@ namespace COMDBG
             this.statusTimeLabel.Text = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
             this.toolStripStatusTx.Text = "Sent: 0";
             this.toolStripStatusRx.Text = "Received: 0";
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            MaximizeBox = false;
         }
+
+      
 
         /// <summary>
         /// Set controller
@@ -363,7 +347,6 @@ namespace COMDBG
                 //If hex radio checked
                 //send bytes to serial port
                 IList<string> textList = ParseUtility.ParseLines(sendText);
-
 
                 sendbtn.Enabled = false; //wait return
                 foreach (var line in textList)
