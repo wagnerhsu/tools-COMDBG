@@ -37,6 +37,8 @@ using System.Text;
 using System.IO.Ports;
 using System.ComponentModel;
 using System.Threading;
+using ComDbgCommon;
+using NLog;
 
 namespace COMDBG
 {
@@ -57,6 +59,14 @@ namespace COMDBG
         public event SerialPortEventHandler comCloseEvent = null;
 
         private Object thisLock = new Object();
+        static ILogger Logger = LogManager.GetCurrentClassLogger();
+        private Encoding _encoding;
+
+        public ComModel()
+        {
+            var configurationUtility = new ConfigurationUtility();
+            _encoding = Encoding.GetEncoding(configurationUtility.GetCodePage);
+        }
 
         /// <summary>
         /// When serial received data, will call this method
@@ -108,6 +118,8 @@ namespace COMDBG
 
             try
             {
+                Logger.LogHexData(bytes);
+                Logger.LogTextData(bytes, _encoding);
                 sp.Write(bytes, 0, bytes.Length);  
             }
             catch (System.Exception)

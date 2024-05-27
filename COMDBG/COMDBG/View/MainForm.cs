@@ -29,15 +29,16 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+using COMDBG.View;
+using ComDbgCommon;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 using System.IO.Ports;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using COMDBG.View;
-using ComDbgCommon;
 
 namespace COMDBG
 {
@@ -46,6 +47,9 @@ namespace COMDBG
         private IController controller;
         private int sendBytesCount = 0;
         private int receiveBytesCount = 0;
+        private static ILogger Logger = LogManager.GetCurrentClassLogger();
+        private ConfigurationUtility _configurationUtility;
+        private Encoding _encoding;
 
         public MainForm()
         {
@@ -55,9 +59,9 @@ namespace COMDBG
             this.toolStripStatusTx.Text = "Sent: 0";
             this.toolStripStatusRx.Text = "Received: 0";
             MaximizeBox = false;
+            _configurationUtility = new ConfigurationUtility();
+            _encoding = Encoding.GetEncoding(_configurationUtility.GetCodePage);
         }
-
-      
 
         /// <summary>
         /// Set controller
@@ -230,6 +234,9 @@ namespace COMDBG
 
                 return;
             }
+
+            Logger.LogHexData(e.receivedBytes);
+            Logger.LogTextData(e.receivedBytes, _encoding);
 
             if (recStrRadiobtn.Checked) //display as string
             {

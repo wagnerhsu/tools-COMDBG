@@ -1,9 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COMDBG", "COMDBG\COMDBG.csproj", "{AB204B9C-C58F-4567-A9BD-46A78A6D49BA}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34814.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "COMDBG", "COMDBG\COMDBG.csproj", "{AB204B9C-C58F-4567-A9BD-46A78A6D49BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComDbgCommon", "ComDbgCommon\ComDbgCommon.csproj", "{EC8128E2-B1E7-420D-9D5A-60E894338E39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComDbgCommon", "ComDbgCommon\ComDbgCommon.csproj", "{EC8128E2-B1E7-420D-9D5A-60E894338E39}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "COMDBGTest", "COMDBGTest\COMDBGTest.csproj", "{C2266422-9232-4C90-B8B5-7A4F6DAC249F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +23,10 @@ Global
 		{EC8128E2-B1E7-420D-9D5A-60E894338E39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC8128E2-B1E7-420D-9D5A-60E894338E39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC8128E2-B1E7-420D-9D5A-60E894338E39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2266422-9232-4C90-B8B5-7A4F6DAC249F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2266422-9232-4C90-B8B5-7A4F6DAC249F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2266422-9232-4C90-B8B5-7A4F6DAC249F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2266422-9232-4C90-B8B5-7A4F6DAC249F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
