@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
-    <ProjectGuid>{AB204B9C-C58F-4567-A9BD-46A78A6D49BA}</ProjectGuid>
+    <ProjectGuid>{C2266422-9232-4C90-B8B5-7A4F6DAC249F}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
@@ -85,6 +85,9 @@
     <PackageReference Include="System.Resources.Extensions" Version="4.6.0" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="System.IO.Ports" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -94,8 +97,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ComDbgCommon\ComDbgCommon.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="System.IO.Ports" Version="8.0.0" />
   </ItemGroup>
 </Project>
